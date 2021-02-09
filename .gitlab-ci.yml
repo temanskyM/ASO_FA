@@ -24,7 +24,7 @@ build:
       - build
       - .gradle
   script:
-    - ls -lhR
+    - ls -la
   artifacts:
     paths:
       - collector-service/build/libs/*.jar
