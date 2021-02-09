@@ -12,6 +12,7 @@ repositories {
 }
 jar {
     enabled = true
+
 }
 
 dependencies {
