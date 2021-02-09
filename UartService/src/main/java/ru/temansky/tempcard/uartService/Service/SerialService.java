@@ -1,18 +1,13 @@
-package ru.tempCard.uartService.Service;
+package ru.temansky.tempcard.UartService.Service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ru.tempCard.uartService.serial.Serial;
+import ru.temansky.tempcard.UartService.serial.Serial;
 
 import javax.annotation.PostConstruct;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Component
 public class SerialService {

@@ -1,14 +1,12 @@
-package ru.tempCard.uartService.serial;
+package ru.temansky.tempcard.UartService.serial;
 
 
-import com.fazecast.jSerialComm.*;
+import com.fazecast.jSerialComm.SerialPort;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.imageio.IIOException;
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.Properties;
 
 @Component

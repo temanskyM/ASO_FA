@@ -1,2 +1,5 @@
-rootProject.name = 'TempCard'
+rootProject.name = 'tempcard'
+include 'collector-service'
+include 'Core'
+include 'UartService'
 

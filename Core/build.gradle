@@ -4,8 +4,12 @@ plugins {
     id 'java'
 }
 
-group 'ru.temansky.tempCard.core'
+group 'ru.temansky'
 version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
 
 repositories {
     mavenCentral()
