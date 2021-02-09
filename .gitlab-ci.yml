@@ -24,7 +24,8 @@ build:
       - build
       - .gradle
   artifacts:
-    path: release/
+    paths:
+      - build/*.jar
     expire_in: 1 week
 
 test:
