@@ -11,6 +11,7 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/Core" />
             <option value="$PROJECT_DIR$/UartService" />
+            <option value="$PROJECT_DIR$/api" />
             <option value="$PROJECT_DIR$/collector-service" />
           </set>
         </option>
