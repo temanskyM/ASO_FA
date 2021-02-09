@@ -24,7 +24,7 @@ build:
       - build
       - .gradle
   artifacts:
-    path: /release
+    path: release/
     expire_in: 1 week
 
 test:
