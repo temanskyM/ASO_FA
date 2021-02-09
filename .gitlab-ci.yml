@@ -23,6 +23,16 @@ build:
     paths:
       - build
       - .gradle
+  script:
+    - ls -lhR
+  artifacts:
+    paths:
+      - collector-service/build/libs/*.jar
+      - Core/build/libs/*.jar
+      - UartService/build/libs/*.jar
+    expire_in: 1 week
+  only:
+    - master
 
 test:
   stage: test
