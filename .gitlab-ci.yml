@@ -23,6 +23,10 @@ build:
     paths:
       - build
       - .gradle
+  artifacts:
+    paths:
+    - releases/
+    expire_in: 1 week
 
 test:
   stage: test
