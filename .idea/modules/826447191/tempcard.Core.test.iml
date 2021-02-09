@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../../Core/src/test/java">
+      <sourceFolder url="file://$MODULE_DIR$/../../../Core/src/test/java" isTestSource="true" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../Core/src/test/java">
+      <sourceFolder url="file://$MODULE_DIR$/../../../Core/src/test/java" isTestSource="true" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../Core/src/test/resources">
+      <sourceFolder url="file://$MODULE_DIR$/../../../Core/src/test/resources" type="java-test-resource" />
+    </content>
+    <content url="file://$MODULE_DIR$/../../../Core/src/test/resources">
+      <sourceFolder url="file://$MODULE_DIR$/../../../Core/src/test/resources" type="java-test-resource" />
+    </content>
+    <orderEntry type="sourceFolder" forTests="false" />
+  </component>
+</module>
