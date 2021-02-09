@@ -24,8 +24,8 @@ build:
       - build
       - .gradle
   artifacts:
-    paths:
-    - releases/*.jar
+    enabled: true
+    path: /mnt/storage/artifacts
     expire_in: 1 week
 
 test:
