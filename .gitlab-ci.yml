@@ -27,7 +27,8 @@ build_gradle:
   
 Copy_artifacts:
   stage: build
-  needs: ["build_gradle"]
+  needs:
+    - job: build_gradle
   script: mkdir buildAll && sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | xarg -n 1 cp buildAll 
   artifacts:
     paths:
