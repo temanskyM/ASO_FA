@@ -26,6 +26,7 @@ build_gradle:
     policy: push
     paths:
       - build
+      - buildAll
       - .gradle
   artifacts:
     paths:
