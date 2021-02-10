@@ -29,22 +29,14 @@ build_gradle:
       - uart-service/build/libs/*.jar
     expire_in: 1 day
 
-test:
-  stage: test
-  script: gradle check
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: pull
-    paths:
-      - build
-      - .gradle
-
 
 deploy_UART:
   stage: deploy
   image: alpine
   before_script:
-    - apk add openssh-client
+    - apt-get update -qq
+  # Setup SSH deploy keys
+    - 'which ssh-agent || ( apt-get install -qq openssh-client )'
     - eval $(ssh-agent -s)
     - ssh-add <(echo "$SSH_PRIVATE_KEY")
     - mkdir -p ~/.ssh
