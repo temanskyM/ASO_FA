@@ -1,5 +1,6 @@
 rootProject.name = 'tempcard'
 include 'collector-service'
-include 'Core'
-include 'UartService'
+include 'web'
+include 'uart-service'
+include 'api'
 

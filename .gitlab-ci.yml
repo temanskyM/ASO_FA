@@ -31,7 +31,6 @@ build_gradle:
       - buildAll/*.jar
     expire_in: 1 day
 
-
 test:
   stage: test
   script: gradle check
