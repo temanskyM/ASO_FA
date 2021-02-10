@@ -2,7 +2,7 @@
 # This is the Gradle build system for JVM applications
 # https://gradle.org/
 # https://github.com/gradle/gradle
-image: gradle:6.7
+image: gradle:latest
 
 # Disable the Gradle daemon for Continuous Integration servers as correctness
 # is usually a priority over speed in CI environments. Using a fresh
@@ -14,20 +14,18 @@ variables:
 before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
-build:
+build_gradle:
   stage: build
-  script: gradle --build-cache assemble
+  script: 
+    - gradle --build-cache assemble
+    - mkdir buildAll
+    - sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | awk '{print "cp "$0" buildAll"}' |xargs -n 3 |sh
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
     paths:
       - build
       - .gradle
-  script:
-    - mkdir buildAll 
-    #- sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | xargs -n 1 cp buildAll
-    - ls -la
-    - sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | xargs -n 1 echo
   artifacts:
     paths:
       - buildAll/*.jar
