@@ -47,3 +47,4 @@ deploy_UART:
     - sshpass -V
     - export SSHPASS=$USER_PASS
     - sshpass -e scp -o StrictHostKeyChecking=no uart-service/build/libs/*.jar $USER@172.31.21.191:/project/uart-service
+    - sshpass -e docker-compose -f /project/uart-service/docker-compose.yml -d --force
