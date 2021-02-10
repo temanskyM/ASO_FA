@@ -16,6 +16,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     runtimeOnly 'org.postgresql:postgresql'
 
+    //Web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
