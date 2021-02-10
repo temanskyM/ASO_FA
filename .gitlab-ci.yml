@@ -11,28 +11,28 @@ image: gradle:latest
 variables:
   GRADLE_OPTS: "-Dorg.gradle.daemon=false"
 
-before_script:
-  - export GRADLE_USER_HOME=`pwd`/.gradle
+#before_script:
+#  - export GRADLE_USER_HOME=`pwd`/.gradle
 
-build_gradle:
-  stage: build
-  script: 
-    - gradle --build-cache assemble
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: push
-    paths:
-      - build
-      - .gradle
-  artifacts:
-    paths:
-      - uart-service/build/libs/*.jar
-    expire_in: 1 day
+#build_gradle:
+#  stage: build
+#  script: 
+#    - gradle --build-cache assemble
+#  cache:
+#    key: "$CI_COMMIT_REF_NAME"
+#    policy: push
+#    paths:
+#      - build
+#      - .gradle
+#  artifacts:
+#    paths:
+#      - uart-service/build/libs/*.jar
+#    expire_in: 1 day
 
 
 deploy_UART:
   stage: deploy
-  image: alpine
+  image: ubuntu:latest
   before_script:
     - apt-get update -qq
   # Setup SSH deploy keys
