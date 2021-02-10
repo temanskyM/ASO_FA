@@ -41,10 +41,10 @@ deploy_UART:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - ssh-keyscan -t rsa 172.31.21.191 > ~/.ssh/known_hosts
+    - ssh-keyscan -t rsa $HOST > ~/.ssh/known_hosts
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   script:
     - sshpass -V
     - export SSHPASS=$USER_PASS
-    - sshpass -e scp -o StrictHostKeyChecking=no uart-service/build/libs/*.jar $USER@172.31.21.191:/project/uart-service
-    - sshpass -e docker-compose -f /project/uart-service/docker-compose.yml up -d --force
+    - sshpass -e scp -o StrictHostKeyChecking=no uart-service/build/libs/*.jar $USER@$HOST:/project/uart-service
+    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/uart-service/docker-compose.yml up -d --force
