@@ -15,7 +15,7 @@ before_script:
   - export GRADLE_USER_HOME=`pwd`/.gradle
 
 build_gradle:
-  stage: build
+  stage: build_2
   script: gradle --build-cache assemble
   cache:
     key: "$CI_COMMIT_REF_NAME"
