@@ -16,8 +16,10 @@ before_script:
 
 build_gradle:
   stage: build
-  script: 
+    script: 
     - gradle --build-cache assemble
+    - mkdir buildAll
+    - sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | awk '{print "cp "$0" buildAll"}' |xargs -n 3 |sh
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
@@ -26,9 +28,9 @@ build_gradle:
       - .gradle
   artifacts:
     paths:
-      - uart-service/build/libs/*.jar
-      - web/build/libs/*.jar
+      - buildAll/*.jar
     expire_in: 1 day
+
 
 
 deploy_UART:
@@ -47,7 +49,7 @@ deploy_UART:
   script:
     - sshpass -V
     - export SSHPASS=$USER_PASS
-    - sshpass -e scp -o StrictHostKeyChecking=no uart-service/build/libs/*.jar $USER@$HOST:/project/ASO_FA/buildAll
+    - sshpass -e scp -o StrictHostKeyChecking=no buildAll/uart*.jar $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/ASO_FA/uart-service/docker-compose.yml up -d --force
 
 deploy_Web:
@@ -66,6 +68,6 @@ deploy_Web:
   script:
     - sshpass -V
     - export SSHPASS=$USER_PASS
-    - sshpass -e scp -o StrictHostKeyChecking=no web/build/libs/*.jar $USER@$HOST:/project/ASO_FA/buildAll
+    - sshpass -e scp -o StrictHostKeyChecking=no buildAll/web*.jar $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/ASO_FA/web/docker-compose.yml up -d --force
 
