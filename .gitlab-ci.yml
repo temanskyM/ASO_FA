@@ -25,6 +25,9 @@ build:
       - .gradle
   script:
     - ls -la
+    - sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | xargs -n 1 echo
+    - sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | xargs -n 1 cp buildAll
+
   artifacts:
     paths:
       - collector-service/build/libs/*.jar
