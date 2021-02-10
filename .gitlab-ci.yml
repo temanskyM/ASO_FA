@@ -41,6 +41,8 @@ deploy_UART:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
+    - ssh-add ~/.ssh/id_rsa
+    - ssh-keyscan -t rsa 172.31.21.191 > ~/.ssh/known_hosts
     - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   script:
     - scp -o StrictHostKeyChecking=no uart-service/build/libs/*.jar $USER@172.31.21.191://project/uart-service
