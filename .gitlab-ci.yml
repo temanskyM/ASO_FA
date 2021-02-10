@@ -18,6 +18,7 @@ build_gradle:
   stage: build
   script: 
     - gradle --build-cache assemble
+    - ls collector-service/build/libs/
     - mkdir buildAll; sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | xargs -n 1 cp buildAll
   cache:
     key: "$CI_COMMIT_REF_NAME"
