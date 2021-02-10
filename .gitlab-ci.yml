@@ -16,14 +16,15 @@ before_script:
 
 build_gradle:
   stage: build
-  script_gradle: gradle --build-cache assemble
+  script_gradle: 
+    - gradle --build-cache assemble
+    - mkdir buildAll; sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | xarg -n 1 cp buildAll
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
     paths:
       - build
       - .gradle
-  script_collect: mkdir buildAll && sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | xarg -n 1 cp buildAll 
   artifacts:
     paths:
       - buildAll/*.jar
