@@ -26,7 +26,7 @@ build_gradle:
       - .gradle
   artifacts:
     paths:
-      - UartService/build/libs/*.jar
+      - uart-service/build/libs/*.jar
     expire_in: 1 day
 
 test:
@@ -46,7 +46,7 @@ deploy_UART:
   before_script:
     - apk add openssh-client
     - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
+    - ssh-add <(echo "$PRIVATE_KEY")
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
   script:
