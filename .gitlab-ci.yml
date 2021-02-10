@@ -46,8 +46,8 @@ deploy_UART:
   before_script:
     - apk add openssh-client
     - eval $(ssh-agent -s)
+    - ssh-add <(echo "$SSH_PRIVATE_KEY")
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
   script:
-    - ssh-add <(echo "$PRIVATE_KEY")
     - scp -o StrictHostKeyChecking=no uart-service/build/libs/*.jar user@172.31.21.191://project/transmission/uart-service
