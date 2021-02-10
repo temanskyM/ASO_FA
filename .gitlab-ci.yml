@@ -24,15 +24,14 @@ build:
       - build
       - .gradle
   script:
-    - ls -lhR
+    - mkdir buildAll 
+    #- sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | xargs -n 1 cp buildAll
+    - ls -la
+    - sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | xargs -n 1 echo
   artifacts:
     paths:
-      - collector-service/build/libs/*.jar
-      - Core/build/libs/*.jar
-      - UartService/build/libs/*.jar
-    expire_in: 1 week
-  only:
-    - master
+      - buildAll/*.jar
+    expire_in: 1 day
 
 test:
   stage: test
