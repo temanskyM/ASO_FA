@@ -29,9 +29,7 @@ build:
   artifacts:
     paths:
       - buildAll/*.jar
-    expire_in: 1 week
-  only:
-    - master
+    expire_in: 1 day
 
 test:
   stage: test
