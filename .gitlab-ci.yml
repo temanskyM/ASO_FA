@@ -34,12 +34,13 @@ deploy_UART:
   stage: deploy
   image: ubuntu:latest
   before_script:
-    - apt-get update -qq
+    - apt-get update -qq && apt-get install -y -qq sshpass
   # Setup SSH deploy keys
-    - 'which ssh-agent || ( apt-get install -qq openssh-client )'
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
     - eval $(ssh-agent -s)
-    - ssh-add <(echo "$SSH_PRIVATE_KEY" | base64 --decode)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
   script:
-    - scp -o StrictHostKeyChecking=no uart-service/build/libs/*.jar user@172.31.21.191://project/transmission/uart-service
+    - scp -o StrictHostKeyChecking=no uart-service/build/libs/*.jar $USER@172.31.21.191://project/uart-service
