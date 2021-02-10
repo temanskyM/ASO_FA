@@ -18,7 +18,7 @@ build_gradle:
   stage: build
   script: 
     - gradle --build-cache assemble
-    - mkdir buildAll; sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | xarg -n 1 cp buildAll
+    - mkdir buildAll; sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | xargs -n 1 cp buildAll
   cache:
     key: "$CI_COMMIT_REF_NAME"
     policy: push
