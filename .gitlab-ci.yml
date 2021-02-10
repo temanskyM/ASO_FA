@@ -19,7 +19,7 @@ build_gradle:
   script: 
     - gradle --build-cache assemble
     - ls collector-service/build/libs/
-    - sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | xargs -n 1 echo buildAll
+    - sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print cp $0"/build/libs/*.jar" buildAll}' | xargs -n 1 echo check
     - mkdir buildAll; sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | xargs -n 1 cp buildAll
   cache:
     key: "$CI_COMMIT_REF_NAME"
