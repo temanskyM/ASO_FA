@@ -27,6 +27,7 @@ build_gradle:
   artifacts:
     paths:
       - uart-service/build/libs/*.jar
+      - web/build/libs/*.jar
     expire_in: 1 day
 
 
@@ -48,3 +49,23 @@ deploy_UART:
     - export SSHPASS=$USER_PASS
     - sshpass -e scp -o StrictHostKeyChecking=no uart-service/build/libs/*.jar $USER@$HOST:/project/uart-service
     - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/uart-service/docker-compose.yml up -d --force
+
+deploy_Web:
+  stage: deploy
+  image: ubuntu:latest
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq sshpass
+  # Setup SSH deploy keys
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -t rsa $HOST > ~/.ssh/known_hosts
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  script:
+    - sshpass -V
+    - export SSHPASS=$USER_PASS
+    - sshpass -e scp -o StrictHostKeyChecking=no web/build/libs/*.jar $USER@$HOST:/project/web
+    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/web/docker-compose.yml up -d --force
+
