@@ -19,6 +19,7 @@ build_gradle:
   script: 
     - gradle --build-cache assemble
     - ls collector-service/build/libs/
+    - mkdir buildAll
     - sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | awk '{print "cp" " " $0 " " "buildAll"}' |xargs -n 3 |sh
     - ls -lR buildAll
     #- mkdir buildAll; sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | xargs -n 1 cp buildAll
@@ -27,7 +28,6 @@ build_gradle:
     policy: push
     paths:
       - build
-      - buildAll
       - .gradle
   artifacts:
     paths:
