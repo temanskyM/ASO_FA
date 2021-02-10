@@ -9,10 +9,10 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
-            <option value="$PROJECT_DIR$/UartService" />
-            <option value="$PROJECT_DIR$/Web" />
             <option value="$PROJECT_DIR$/api" />
             <option value="$PROJECT_DIR$/collector-service" />
+            <option value="$PROJECT_DIR$/uart-service" />
+            <option value="$PROJECT_DIR$/web" />
           </set>
         </option>
         <option name="useQualifiedModuleNames" value="true" />
