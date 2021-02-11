@@ -39,7 +39,7 @@ public class Agents {
         return agentsRepository.findById(id).orElseThrow(() -> new AgentNotFoundException(id));
     }
 
-    @PutMapping("api/agents/{id}")
+    @PutMapping("/api/agents/{id}")
     Agent replaceAgent(@RequestBody Agent newAgent, @PathVariable Long id){
         return agentsRepository.findById(id).map(agent -> {
             agent.setHostname(newAgent.getHostname());
@@ -49,6 +49,11 @@ public class Agents {
             newAgent.setId(id);
             return agentsRepository.save(newAgent);
         });
+    }
+
+    @DeleteMapping("/api/agents/{id}")
+    void deleteAgent(@PathVariable Long id){
+        agentsRepository.deleteById(id);
     }
 
 
