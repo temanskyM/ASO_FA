@@ -39,6 +39,18 @@ public class Agents {
         return agentsRepository.findById(id).orElseThrow(() -> new AgentNotFoundException(id));
     }
 
+    @PutMapping("api/agents/{id}")
+    Agent replaceAgent(@RequestBody Agent newAgent, @PathVariable Long id){
+        return agentsRepository.findById(id).map(agent -> {
+            agent.setHostname(newAgent.getHostname());
+            agent.setIp(newAgent.getIp());
+            return agentsRepository.save(agent);
+        }).orElseGet(()->{
+            newAgent.setId(id);
+            return agentsRepository.save(newAgent);
+        });
+    }
+
 
 
 }
