@@ -26,8 +26,7 @@ public class Agent {
             mappedBy = "agent")
     private List<ArduinoSensor> arduinoSensors = new ArrayList<>();
 
-    public Agent() {
-    }
+    public Agent() {}
 
     public Agent(String hostname, String ip, String port) {
         this.hostname = hostname;
