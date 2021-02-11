@@ -24,9 +24,7 @@ public class Agent {
     private String port;
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.EAGER,
-            mappedBy = "agent")
+    @OneToMany(mappedBy = "agent")
     private List<Sensor> sensors = new ArrayList<>();
 
     public Agent() {}
@@ -35,6 +33,10 @@ public class Agent {
         this.hostname = hostname;
         this.ip = ip;
         this.port = port;
+    }
+
+    public Agent(Long id) {
+        this.id = id;
     }
 
     public Long getId() {

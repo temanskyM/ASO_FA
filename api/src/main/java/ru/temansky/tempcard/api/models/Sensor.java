@@ -1,6 +1,7 @@
 package ru.temansky.tempcard.api.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,11 +22,11 @@ public class Sensor {
     @JoinColumn(name = "agent_id", nullable = false)
     private Agent agent;
 
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY,
-            mappedBy = "sensor")
-    private List<SensorValue> sensorValues = new ArrayList<>();
+//    @JsonIgnore
+//    @OneToMany(cascade = CascadeType.ALL,
+//            fetch = FetchType.LAZY,
+//            mappedBy = "sensor")
+//    private List<SensorValue> sensorValues = new ArrayList<>();
 
     public Sensor() {
     }
@@ -59,13 +60,13 @@ public class Sensor {
         this.agent = agent;
     }
 
-    public List<SensorValue> getSensorValues() {
-        return sensorValues;
-    }
+//    public List<SensorValue> getSensorValues() {
+//        return sensorValues;
+//    }
 
-    public void setSensorValues(List<SensorValue> sensorValues) {
-        this.sensorValues = sensorValues;
-    }
+//    public void setSensorValues(List<SensorValue> sensorValues) {
+//        this.sensorValues = sensorValues;
+//    }
 
     @Override
     public boolean equals(Object o) {

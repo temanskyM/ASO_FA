@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import ru.temansky.tempcard.api.models.*;
 import ru.temansky.tempcard.api.repositories.AgentsRepository;
-import ru.temansky.tempcard.api.repositories.SensorRepository;
+import ru.temansky.tempcard.api.repositories.SensorsRepository;
 import ru.temansky.tempcard.api.repositories.SensorValueRepository;
 
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ public class ApiController {
     private AgentsRepository agentsRepository;
 
     @Autowired
-    private SensorRepository sensorRepository;
+    private SensorsRepository sensorsRepository;
 
     @Autowired
     private SensorValueRepository sensorValueRepository;

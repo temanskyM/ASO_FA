@@ -6,7 +6,7 @@ import ru.temansky.tempcard.api.models.Sensor;
 
 import java.util.List;
 
-public interface SensorRepository extends CrudRepository<Sensor, Long> {
+public interface SensorsRepository extends CrudRepository<Sensor, Long> {
     List<Sensor> findByNameAndAgent(String name, Agent agent);
     List<Sensor> findAllByAgentId(Long id);
 }
