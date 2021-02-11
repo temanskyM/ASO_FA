@@ -93,4 +93,6 @@ deploy_Api:
     - export SSHPASS=$USER_PASS
     - sshpass -e scp -o StrictHostKeyChecking=no buildAll/api*.jar $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/ASO_FA/api/docker-compose.yml up -d --force
+  only:
+    - master
 
