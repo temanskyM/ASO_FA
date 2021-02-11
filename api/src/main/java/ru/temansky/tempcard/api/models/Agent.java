@@ -1,6 +1,8 @@
 package ru.temansky.tempcard.api.models;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,10 +23,11 @@ public class Agent {
     @Column(name = "port", nullable = false, length = 250)
     private String port;
 
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL,
             fetch = FetchType.EAGER,
             mappedBy = "agent")
-    private List<ArduinoSensor> arduinoSensors = new ArrayList<>();
+    private List<Sensor> sensors = new ArrayList<>();
 
     public Agent() {}
 
@@ -66,12 +69,12 @@ public class Agent {
         this.port = port;
     }
 
-    public List<ArduinoSensor> getArduinoSensors() {
-        return arduinoSensors;
+    public List<Sensor> getSensors() {
+        return sensors;
     }
 
-    public void setArduinoSensors(List<ArduinoSensor> arduinoSensors) {
-        this.arduinoSensors = arduinoSensors;
+    public void setSensors(List<Sensor> sensors) {
+        this.sensors = sensors;
     }
 
     @Override

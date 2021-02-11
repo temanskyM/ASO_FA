@@ -5,12 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import ru.temansky.tempcard.api.models.*;
 import ru.temansky.tempcard.api.repositories.AgentsRepository;
-import ru.temansky.tempcard.api.repositories.ArduinoSensorRepository;
+import ru.temansky.tempcard.api.repositories.SensorRepository;
 import ru.temansky.tempcard.api.repositories.SensorValueRepository;
 
 import java.util.ArrayList;
@@ -24,30 +23,14 @@ public class ApiController {
     private AgentsRepository agentsRepository;
 
     @Autowired
-    private ArduinoSensorRepository arduinoSensorRepository;
+    private SensorRepository sensorRepository;
 
     @Autowired
     private SensorValueRepository sensorValueRepository;
 
 
 
-    @GetMapping("/api/getSensorList/{id}")
-    public List<ArduinoSensorEntity> getSensorList(@PathVariable Long id) {
-        List<ArduinoSensorEntity> result = new ArrayList<>();
-        try {
-            //Получаем список агентов и пытаем получить от них JSON
-            List<ArduinoSensor> sensorList = arduinoSensorRepository.findAllByAgentId(id);
-            for (ArduinoSensor sensor : sensorList) {
-                result.add(new ArduinoSensorEntity(sensor.getId(), sensor.getName()));
-            }
-        } catch (
-                Exception e) {
-            LOGGER.error(e.getMessage());
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, e.getMessage(), e);
-        }
-        return result;
-    }
+
 
     @GetMapping("/api/getSensorData")
     public List<SensorValueEntity> getSensorData() {
