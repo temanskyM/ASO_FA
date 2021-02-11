@@ -51,6 +51,8 @@ deploy_UART:
     - export SSHPASS=$USER_PASS
     - sshpass -e scp -o StrictHostKeyChecking=no buildAll/uart*.jar $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/ASO_FA/uart-service/docker-compose.yml up -d --force
+  only:
+    - master
 
 deploy_Web:
   stage: deploy
@@ -70,4 +72,6 @@ deploy_Web:
     - export SSHPASS=$USER_PASS
     - sshpass -e scp -o StrictHostKeyChecking=no buildAll/web*.jar $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/ASO_FA/web/docker-compose.yml up -d --force
+  only:
+    - master
 
