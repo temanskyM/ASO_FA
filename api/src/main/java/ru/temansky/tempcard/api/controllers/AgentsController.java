@@ -2,25 +2,22 @@ package ru.temansky.tempcard.api.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 import ru.temansky.tempcard.api.exceptions.AgentNotFoundException;
 import ru.temansky.tempcard.api.models.Agent;
-import ru.temansky.tempcard.api.models.AgentEntity;
 import ru.temansky.tempcard.api.repositories.AgentsRepository;
 
-import java.util.ArrayList;
+import java.net.URI;
 import java.util.List;
 
 @RestController
-public class Agents {
-    final Logger LOGGER = LoggerFactory.getLogger(Agents.class);
+public class AgentsController {
+    final Logger LOGGER = LoggerFactory.getLogger(AgentsController.class);
 
     private final AgentsRepository agentsRepository;
 
-    public Agents(AgentsRepository agentsRepository) {
+    public AgentsController(AgentsRepository agentsRepository) {
         this.agentsRepository = agentsRepository;
     }
 
