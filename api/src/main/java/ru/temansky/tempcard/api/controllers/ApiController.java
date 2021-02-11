@@ -30,24 +30,6 @@ public class ApiController {
     private SensorValueRepository sensorValueRepository;
 
 
-    @GetMapping("/api/getAgentsList")
-    public List<AgentEntity> getAgentsList() {
-        List<AgentEntity> result = new ArrayList<>();
-        try {
-            //Получаем список агентов и пытаем получить от них JSON
-            List<Agent> agentList = agentsRepository.findAll();
-            for (Agent agent : agentList) {
-                String name = agent.getHostname() + "(" + agent.getIp() + ":" + agent.getPort() + ")";
-                result.add(new AgentEntity(agent.getId(), name));
-            }
-        } catch (
-                Exception e) {
-            LOGGER.error(e.getMessage());
-            throw new ResponseStatusException(
-                    HttpStatus.BAD_REQUEST, e.getMessage(), e);
-        }
-        return result;
-    }
 
     @GetMapping("/api/getSensorList/{id}")
     public List<ArduinoSensorEntity> getSensorList(@PathVariable Long id) {
