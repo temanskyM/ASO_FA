@@ -31,11 +31,7 @@ public class SensorController {
 
     @PostMapping("/api/agents/{agent_id}/sensors")
     Sensor newSensor(@PathVariable long agent_id, @RequestBody Sensor newSensor) {
-        Optional<Agent> agentOptional = agentsRepository.findById(agent_id);
-        if (!agentOptional.isPresent()) {
-            throw new AgentNotFoundException(agent_id);
-        }
-        Agent agent = agentOptional.get();
+        Agent agent = agentsRepository.findById(agent_id).orElseThrow(() -> new AgentNotFoundException(agent_id));
         newSensor.setAgent(agent);
         return sensorsRepository.save(newSensor);
     }
@@ -43,11 +39,7 @@ public class SensorController {
 
     @GetMapping("/api/agents/{agent_id}/sensors")
     Iterable<Sensor> allFromAgents(@PathVariable long agent_id) {
-        Optional<Agent> agentOptional = agentsRepository.findById(agent_id);
-        if (!agentOptional.isPresent()) {
-            throw new AgentNotFoundException(agent_id);
-        }
-        Agent agent = agentOptional.get();
+        Agent agent = agentsRepository.findById(agent_id).orElseThrow(() -> new AgentNotFoundException(agent_id));
         return agent.getSensors();
     }
 
