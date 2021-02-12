@@ -54,15 +54,40 @@ public class SensorController {
         return listSensor.get(0);
     }
 
+    @PutMapping("/api/agents/{agentId}/sensors/{sensorId}")
+    Sensor updateSensorFromAgent(@RequestBody Sensor newSensor, @PathVariable Long agentId, @PathVariable Long sensorId){
+
+        Agent agent = agentsRepository.findById(agentId).orElseThrow(() -> new AgentNotFoundException(agentId));
+        List<Sensor> listSensor = agent.getSensors().stream()
+                .filter(value -> value.getId().equals(sensorId))
+                .collect(Collectors.toList());
+        if (listSensor.size() == 0)
+            throw new SensorNotFoundException(sensorId);
+
+        Sensor sensor = listSensor.get(0);
+        sensor.setName(newSensor.getName());
+        return sensorsRepository.save(sensor);
+    }
+
+
     @GetMapping("/api/agents/{agent_id}/sensors")
     Iterable<Sensor> allFromAgents(@PathVariable long agent_id) {
         Agent agent = agentsRepository.findById(agent_id).orElseThrow(() -> new AgentNotFoundException(agent_id));
         return agent.getSensors();
     }
 
+    @PutMapping("/api/sensors/{sensorId}")
+    Sensor updateSensor(@RequestBody Sensor newSensor, @PathVariable Long sensorId){
+        return sensorsRepository.findById(sensorId).map(sensor -> {
+            sensor.setName(newSensor.getName());
+            return sensorsRepository.save(sensor);
+        }).orElseThrow(() -> new SensorNotFoundException(sensorId));
+    }
+
     @DeleteMapping("api/sensors/{id}")
     void deleteSensor(@PathVariable Long id) {
         sensorsRepository.deleteById(id);
     }
+
 
 }
