@@ -1,6 +1,5 @@
 plugins {
     id 'java'
-    id 'nebula.release' version '15.2.0'
 }
 
 group 'ru.temansky'

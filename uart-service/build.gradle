@@ -5,14 +5,17 @@ plugins {
 }
 
 group 'ru.temansky'
-version '1.0-SNAPSHOT'
+version getCheckedOutGitCommitHash()
+
+static def getCheckedOutGitCommitHash() {
+    'git rev-parse --verify --short HEAD'.execute().text.trim()
+}
 
 repositories {
     mavenCentral()
 }
 jar {
     enabled = true
-
 }
 
 dependencies {
@@ -29,3 +32,4 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
