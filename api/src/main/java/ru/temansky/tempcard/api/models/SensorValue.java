@@ -1,5 +1,7 @@
 package ru.temansky.tempcard.api.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -19,6 +21,7 @@ public class SensorValue {
     @Column(name = "local_date_time", columnDefinition = "TIMESTAMP")
     private LocalDateTime localDateTime;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sensor_id", nullable = false)
     private Sensor sensor;
