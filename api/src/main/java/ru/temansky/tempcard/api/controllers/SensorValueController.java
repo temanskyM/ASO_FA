@@ -65,4 +65,13 @@ public class SensorValueController {
         return sensorValueRepository.save(newSensorValue);
     }
 
+    @PutMapping("/api/sensorValues/{sensorValueId}")
+    SensorValue updateSensorValue(@RequestBody SensorValue newSensorValue, @PathVariable Long sensorValueId){
+        return sensorValueRepository.findById(sensorValueId).map(sensorValue -> {
+            sensorValue.setHum(newSensorValue.getHum());
+            sensorValue.setTemp(newSensorValue.getTemp());
+            sensorValue.setLocalDateTime(newSensorValue.getLocalDateTime());
+            return sensorValueRepository.save(sensorValue);
+        }).orElseThrow(() ->new SensorValueNotFoundException(sensorValueId));
+    }
 }
