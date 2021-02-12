@@ -9,10 +9,12 @@ import ru.temansky.tempcard.api.exceptions.SensorValueNotFoundException;
 import ru.temansky.tempcard.api.models.Agent;
 import ru.temansky.tempcard.api.models.Sensor;
 import ru.temansky.tempcard.api.models.SensorValue;
+import ru.temansky.tempcard.api.repositories.AgentsRepository;
 import ru.temansky.tempcard.api.repositories.SensorValueRepository;
 import ru.temansky.tempcard.api.repositories.SensorsRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 public class SensorValueController {
@@ -20,11 +22,13 @@ public class SensorValueController {
 
     private final SensorsRepository sensorsRepository;
     private final SensorValueRepository sensorValueRepository;
+    private final AgentsRepository agentsRepository;
 
 
-    public SensorValueController(SensorsRepository sensorsRepository, SensorValueRepository sensorValueRepository) {
+    public SensorValueController(SensorsRepository sensorsRepository, SensorValueRepository sensorValueRepository, AgentsRepository agentsRepository) {
         this.sensorsRepository = sensorsRepository;
         this.sensorValueRepository = sensorValueRepository;
+        this.agentsRepository = agentsRepository;
     }
 
     @GetMapping("/api/sensorValues")
@@ -44,11 +48,21 @@ public class SensorValueController {
     }
 
     @PostMapping("/api/sensors/{sensor_id}/sensorValues")
-    SensorValue newSensor(@PathVariable long sensor_id, @RequestBody SensorValue newSensorValue) {
+    SensorValue newSensorValueFromSensorId(@PathVariable long sensor_id, @RequestBody SensorValue newSensorValue) {
         Sensor sensor = sensorsRepository.findById(sensor_id).orElseThrow(() -> new SensorNotFoundException(sensor_id));
         newSensorValue.setSensor(sensor);
         return sensorValueRepository.save(newSensorValue);
     }
 
+    @PostMapping("/api/agents/{agent_id}/sensors/{sensor_id}/sensorValues")
+    SensorValue newSensorValueFromAgentIdAndSensorId(@PathVariable long agent_id, @PathVariable long sensor_id, @RequestBody SensorValue newSensorValue) {
+        Agent agent = agentsRepository.findById(agent_id).orElseThrow(() -> new AgentNotFoundException(agent_id));
+        Sensor sensor = agent.getSensors().stream()
+                .filter(findSensor -> findSensor.getId().equals(sensor_id))
+                .findFirst()
+                .orElseThrow(()-> new SensorNotFoundException(sensor_id));
+        newSensorValue.setSensor(sensor);
+        return sensorValueRepository.save(newSensorValue);
+    }
 
 }
