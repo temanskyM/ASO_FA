@@ -12,6 +12,8 @@ import ru.temansky.tempcard.api.models.SensorValue;
 import ru.temansky.tempcard.api.repositories.SensorValueRepository;
 import ru.temansky.tempcard.api.repositories.SensorsRepository;
 
+import java.util.List;
+
 @RestController
 public class SensorValueController {
     final Logger LOGGER = LoggerFactory.getLogger(SensorValueController.class);
@@ -33,6 +35,12 @@ public class SensorValueController {
     @GetMapping("/api/sensorValues/{id}")
     SensorValue getOne(@PathVariable Long id) {
         return sensorValueRepository.findById(id).orElseThrow(() -> new SensorValueNotFoundException(id));
+    }
+
+    @GetMapping("/api/sensors/{sensor_id}/sensorValues")
+    List<SensorValue> getSensorValuesFromSensor(@PathVariable long sensor_id) {
+        Sensor sensor = sensorsRepository.findById(sensor_id).orElseThrow(() -> new SensorNotFoundException(sensor_id));
+        return sensor.getSensorValues();
     }
 
     @PostMapping("/api/sensors/{sensor_id}/sensorValues")
