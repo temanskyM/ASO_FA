@@ -13,7 +13,7 @@ public class SensorValueNotFoundAdvice {
     @ResponseBody
     @ExceptionHandler(SensorValueNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    String sensorNotFoundHandler(SensorValueNotFoundException ex) {
+    String sensorValueNotFoundHandler(SensorValueNotFoundException ex) {
         return ex.getMessage();
     }
 }
