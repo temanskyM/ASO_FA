@@ -43,6 +43,11 @@ public class SensorController {
         return agent.getSensors();
     }
 
+    @GetMapping("/api/sensors/{id}")
+    Sensor getOne(@PathVariable Long id){
+        return sensorsRepository.findById(id).orElseThrow();
+    }
+
     @DeleteMapping("api/sensors/{id}")
     void deleteSensor(@PathVariable Long id){
         sensorsRepository.deleteById(id);
