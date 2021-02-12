@@ -21,13 +21,13 @@ public class SensorValue {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "sensor_id", nullable = false)
-    private ArduinoSensor arduinoSensor;
+    private Sensor sensor;
 
-    public SensorValue(double temp, double hum, LocalDateTime localDateTime, ArduinoSensor arduinoSensor) {
+    public SensorValue(double temp, double hum, LocalDateTime localDateTime, Sensor sensor) {
         this.temp = temp;
         this.hum = hum;
         this.localDateTime = localDateTime;
-        this.arduinoSensor = arduinoSensor;
+        this.sensor = sensor;
     }
 
     public Long getId() {
@@ -61,11 +61,11 @@ public class SensorValue {
         this.localDateTime = localDateTime;
     }
 
-    public ArduinoSensor getArduinoSensor() {
-        return arduinoSensor;
+    public Sensor getSensor() {
+        return sensor;
     }
 
-    public void setArduinoSensor(ArduinoSensor arduinoSensor) {
-        this.arduinoSensor = arduinoSensor;
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
     }
 }

@@ -2,13 +2,11 @@ package ru.temansky.tempcard.api.controllers;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.temansky.tempcard.api.exceptions.AgentNotFoundException;
 import ru.temansky.tempcard.api.models.Agent;
 import ru.temansky.tempcard.api.repositories.AgentsRepository;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
