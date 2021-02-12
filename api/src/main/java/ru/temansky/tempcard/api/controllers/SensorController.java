@@ -10,6 +10,7 @@ import ru.temansky.tempcard.api.repositories.AgentsRepository;
 import ru.temansky.tempcard.api.repositories.SensorsRepository;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class SensorController {
@@ -28,6 +29,10 @@ public class SensorController {
         return sensorsRepository.findAll();
     }
 
+    @GetMapping("/api/sensors/{id}")
+    Sensor getOne(@PathVariable Long id) {
+        return sensorsRepository.findById(id).orElseThrow();
+    }
 
     @PostMapping("/api/agents/{agent_id}/sensors")
     Sensor newSensor(@PathVariable long agent_id, @RequestBody Sensor newSensor) {
@@ -36,6 +41,15 @@ public class SensorController {
         return sensorsRepository.save(newSensor);
     }
 
+    @GetMapping("/api/agents/{agentId}/sensors/{sensorId}")
+    Sensor getOneFromAgent(@PathVariable Long agentId, @PathVariable Long sensorId) {
+        Agent agent = agentsRepository.findById(agentId).orElseThrow(() -> new AgentNotFoundException(agentId));
+        return agent.getSensors().stream()
+                .filter(value -> value.getId().equals(sensorId))
+                .limit(1)
+                .collect(Collectors.toList())
+                .get(0);
+    }
 
     @GetMapping("/api/agents/{agent_id}/sensors")
     Iterable<Sensor> allFromAgents(@PathVariable long agent_id) {
@@ -43,13 +57,9 @@ public class SensorController {
         return agent.getSensors();
     }
 
-    @GetMapping("/api/sensors/{id}")
-    Sensor getOne(@PathVariable Long id){
-        return sensorsRepository.findById(id).orElseThrow();
-    }
 
     @DeleteMapping("api/sensors/{id}")
-    void deleteSensor(@PathVariable Long id){
+    void deleteSensor(@PathVariable Long id) {
         sensorsRepository.deleteById(id);
     }
 
