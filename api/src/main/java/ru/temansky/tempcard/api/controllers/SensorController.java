@@ -43,4 +43,9 @@ public class SensorController {
         return agent.getSensors();
     }
 
+    @DeleteMapping("api/sensors/{id}")
+    void deleteSensor(@PathVariable Long id){
+        sensorsRepository.deleteById(id);
+    }
+
 }
