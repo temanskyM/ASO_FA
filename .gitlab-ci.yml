@@ -50,7 +50,7 @@ deploy_UART:
   script:
     - sshpass -V
     - export SSHPASS=$USER_PASS
-    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST echo GIT_HASH=$CI_COMMIT_SHORT_SHA > web-variables.env
+    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST echo GIT_HASH=$CI_COMMIT_SHORT_SHA > /project/ASO_FA/buildAll/web-variables.env
     - sshpass -e scp -o StrictHostKeyChecking=no buildAll/uart*.jar $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/ASO_FA/uart-service/docker-compose.yml up -d --force 
   only:
@@ -72,7 +72,7 @@ deploy_Web:
   script:
     - sshpass -V
     - export SSHPASS=$USER_PASS
-    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST echo GIT_HASH=$CI_COMMIT_SHORT_SHA > web-variables.env
+    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST echo GIT_HASH=$CI_COMMIT_SHORT_SHA > /project/ASO_FA/buildAll/web-variables.env
     - sshpass -e scp -o StrictHostKeyChecking=no buildAll/web*.jar $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/ASO_FA/web/docker-compose.yml up -d --force
   only:
@@ -94,7 +94,7 @@ deploy_Api:
   script:
     - sshpass -V
     - export SSHPASS=$USER_PASS
-    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST echo GIT_HASH=$CI_COMMIT_SHORT_SHA > web-variables.env
+    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST echo GIT_HASH=$CI_COMMIT_SHORT_SHA > /project/ASO_FA/buildAll/web-variables.env
     - sshpass -e scp -o StrictHostKeyChecking=no buildAll/api*.jar $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/ASO_FA/api/docker-compose.yml up -d --force
   only:
