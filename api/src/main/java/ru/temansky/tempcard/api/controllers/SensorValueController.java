@@ -74,4 +74,9 @@ public class SensorValueController {
             return sensorValueRepository.save(sensorValue);
         }).orElseThrow(() ->new SensorValueNotFoundException(sensorValueId));
     }
+
+    @DeleteMapping("api/sensorValues/{id}")
+    void deleteSensorValue(@PathVariable Long id) {
+        sensorValueRepository.deleteById(id);
+    }
 }
