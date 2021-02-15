@@ -116,7 +116,7 @@ deploy_Stage:
   script:
     - sshpass -V
     - export SSHPASS=$USER_PASS
-    - sshpass -e ssh -o stricthostkeychecking=no buildAll/web-variables.env $USER@$HOST:/project/ASO_FA/buildAll
+    - sshpass -e scp -o stricthostkeychecking=no buildAll/web-variables.env $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e scp -o StrictHostKeyChecking=no buildAll/web*.jar $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/ASO_FA/stage/docker-compose.yml up -d --force
 
