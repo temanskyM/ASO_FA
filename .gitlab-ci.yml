@@ -19,7 +19,7 @@ build_gradle:
   script: 
     - gradle --build-cache assemble
     - mkdir buildAll
-    - echo GIT_HASH=$CI_COMMIT_SHORT_SHA > web-variables.env
+    - echo GIT_HASH=$CI_COMMIT_SHORT_SHA > buildAll/web-variables.env
     - sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | awk '{print "cp "$0" buildAll"}' |xargs -n 3 |sh
   cache:
     key: "$CI_COMMIT_REF_NAME"
@@ -116,7 +116,7 @@ deploy_Stage:
   script:
     - sshpass -V
     - export SSHPASS=$USER_PASS
-    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST echo GIT_HASH=$CI_COMMIT_SHORT_SHA > /project/ASO_FA/buildAll/web-variables.env
+    - sshpass -e ssh -o stricthostkeychecking=no buildAll/web-variables.env $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e scp -o StrictHostKeyChecking=no buildAll/web*.jar $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/ASO_FA/stage/docker-compose.yml up -d --force
 
