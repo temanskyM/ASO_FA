@@ -8,7 +8,7 @@ group 'ru.temansky'
 version getCheckedOutGitCommitHash()
 
 static def getCheckedOutGitCommitHash() {
-    'git rev-parse --verify --short HEAD'.execute().text.trim()
+    'git rev-parse --verify --short=8 HEAD'.execute().text.trim()
 }
 
 repositories {
