@@ -119,7 +119,8 @@ deploy_Stage:
     - export SSHPASS=$USER_PASS
 #    - sshpass -e scp -o stricthostkeychecking=no buildAll/web-variables.env $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e scp -o StrictHostKeyChecking=no buildAll/web*.jar $USER@$HOST:/project/ASO_FA/buildAll
-    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST  export GIT_HASH=$CI_COMMIT_SHORT_SHA
+    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST  export GITHASH=$CI_COMMIT_SHORT_SHA
+    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST  echo $GITHASH
     - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/ASO_FA/stage/docker-compose.yml up -d --force
 
 
