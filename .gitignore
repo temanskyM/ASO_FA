@@ -1,0 +1,10 @@
+/build/*
+/api/build/*
+/web/build/*
+/collector-service/build/*
+/uart-service/build/*
+/.gradle/*
+/gradle/
+/gradlew
+/gradlew.bat
+/settings.xml

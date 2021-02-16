@@ -19,6 +19,7 @@ build_gradle:
   script: 
     - gradle --build-cache assemble
     - mkdir buildAll
+    - echo GITHASH=$CI_COMMIT_SHORT_SHA > buildAll/web-variables.env
     - sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | awk '{print "cp "$0" buildAll"}' |xargs -n 3 |sh
   cache:
     key: "$CI_COMMIT_REF_NAME"
@@ -29,6 +30,7 @@ build_gradle:
   artifacts:
     paths:
       - buildAll/*.jar
+      - buildAll/web-variables.env
     expire_in: 1 day
 
 
@@ -49,8 +51,13 @@ deploy_UART:
   script:
     - sshpass -V
     - export SSHPASS=$USER_PASS
+    - sshpass -e scp -o stricthostkeychecking=no buildAll/web-variables.env $USER@$HOST:/project/ASO_FA/buildAll
+    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST echo GIT_HASH=$CI_COMMIT_SHORT_SHA > /project/ASO_FA/buildAll/web-variables.env
     - sshpass -e scp -o StrictHostKeyChecking=no buildAll/uart*.jar $USER@$HOST:/project/ASO_FA/buildAll
-    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/ASO_FA/uart-service/docker-compose.yml up -d --force
+    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose \
+      -f /project/ASO_FA/uart-service/docker-compose.yml \
+      --env-file /project/ASO_FA/buildAll/web-variables.env \
+      up -d --force
   only:
     - master
 
@@ -70,8 +77,13 @@ deploy_Web:
   script:
     - sshpass -V
     - export SSHPASS=$USER_PASS
+    - sshpass -e scp -o stricthostkeychecking=no buildAll/web-variables.env $USER@$HOST:/project/ASO_FA/buildAll
+    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST echo GIT_HASH=$CI_COMMIT_SHORT_SHA > /project/ASO_FA/buildAll/web-variables.env
     - sshpass -e scp -o StrictHostKeyChecking=no buildAll/web*.jar $USER@$HOST:/project/ASO_FA/buildAll
-    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/ASO_FA/web/docker-compose.yml up -d --force
+    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose \
+      -f /project/ASO_FA/web/docker-compose.yml \
+      --env-file /project/ASO_FA/buildAll/web-variables.env \
+      up -d --force
   only:
     - master
 
@@ -91,8 +103,36 @@ deploy_Api:
   script:
     - sshpass -V
     - export SSHPASS=$USER_PASS
+    - sshpass -e scp -o stricthostkeychecking=no buildAll/web-variables.env $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e scp -o StrictHostKeyChecking=no buildAll/api*.jar $USER@$HOST:/project/ASO_FA/buildAll
-    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose -f /project/ASO_FA/api/docker-compose.yml up -d --force
+    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose \
+      -f /project/ASO_FA/api/docker-compose.yml \
+      --env-file /project/ASO_FA/buildAll/web-variables.env \
+      up -d --force
   only:
     - master
+
+deploy_Stage:
+  stage: deploy
+  image: ubuntu:latest
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq sshpass
+  # Setup SSH deploy keys
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -t rsa $HOST > ~/.ssh/known_hosts
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  script:
+    - sshpass -V
+    - export SSHPASS=$USER_PASS
+    - sshpass -e scp -o stricthostkeychecking=no buildAll/web-variables.env $USER@$HOST:/project/ASO_FA/buildAll
+    - sshpass -e scp -o StrictHostKeyChecking=no buildAll/web*.jar $USER@$HOST:/project/ASO_FA/buildAll
+    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose \
+      -f /project/ASO_FA/stage/docker-compose.yml \
+      --env-file /project/ASO_FA/buildAll/web-variables.env \
+      up -d --force
+
 
