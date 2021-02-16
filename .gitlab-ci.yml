@@ -52,7 +52,6 @@ deploy_UART:
     - sshpass -V
     - export SSHPASS=$USER_PASS
     - sshpass -e scp -o stricthostkeychecking=no buildAll/web-variables.env $USER@$HOST:/project/ASO_FA/buildAll
-    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST echo GIT_HASH=$CI_COMMIT_SHORT_SHA > /project/ASO_FA/buildAll/web-variables.env
     - sshpass -e scp -o StrictHostKeyChecking=no buildAll/uart*.jar $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose \
       -f /project/ASO_FA/uart-service/docker-compose.yml \
@@ -78,7 +77,6 @@ deploy_Web:
     - sshpass -V
     - export SSHPASS=$USER_PASS
     - sshpass -e scp -o stricthostkeychecking=no buildAll/web-variables.env $USER@$HOST:/project/ASO_FA/buildAll
-    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST echo GIT_HASH=$CI_COMMIT_SHORT_SHA > /project/ASO_FA/buildAll/web-variables.env
     - sshpass -e scp -o StrictHostKeyChecking=no buildAll/web*.jar $USER@$HOST:/project/ASO_FA/buildAll
     - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose \
       -f /project/ASO_FA/web/docker-compose.yml \
@@ -134,5 +132,6 @@ deploy_Stage:
       -f /project/ASO_FA/stage/docker-compose.yml \
       --env-file /project/ASO_FA/buildAll/web-variables.env \
       up -d --force
+  only: non-master-branches
 
 
