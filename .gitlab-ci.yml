@@ -132,6 +132,5 @@ deploy_Stage:
       -f /project/ASO_FA/stage/docker-compose.yml \
       --env-file /project/ASO_FA/buildAll/web-variables.env \
       up -d --force
-  only: non-master-branches
 
 
