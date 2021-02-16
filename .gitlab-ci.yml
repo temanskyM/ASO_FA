@@ -19,7 +19,7 @@ build_gradle:
   script: 
     - gradle --build-cache assemble
     - mkdir buildAll
-    - echo GIT_HASH=$CI_COMMIT_SHORT_SHA > buildAll/web-variables.env
+    - echo GITHASH=$CI_COMMIT_SHORT_SHA > buildAll/web-variables.env
     - sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | awk '{print "cp "$0" buildAll"}' |xargs -n 3 |sh
   cache:
     key: "$CI_COMMIT_REF_NAME"
