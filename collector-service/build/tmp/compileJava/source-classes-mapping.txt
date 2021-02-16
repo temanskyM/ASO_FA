@@ -1,18 +1,18 @@
-ru/temansky/tempcard/collectorService/models/db/ArduinoSensor.java
- ru.temansky.tempcard.collectorService.models.db.ArduinoSensor
-ru/temansky/tempcard/collectorService/repositories/SensorValueRepository.java
- ru.temansky.tempcard.collectorService.repositories.SensorValueRepository
+ru/temansky/tempcard/collectorService/service/SensorValueService.java
+ ru.temansky.tempcard.collectorService.service.SensorValueService
+ru/temansky/tempcard/collectorService/implementation/AgentServiceImpl.java
+ ru.temansky.tempcard.collectorService.implementation.AgentServiceImpl
 ru/temansky/tempcard/collectorService/configurations/LoadAgentsList.java
  ru.temansky.tempcard.collectorService.configurations.LoadAgentsList
+ru/temansky/tempcard/collectorService/implementation/SensorServiceImpl.java
+ ru.temansky.tempcard.collectorService.implementation.SensorServiceImpl
 ru/temansky/tempcard/collectorService/tasks/CollectInfoFromSerialAgent.java
  ru.temansky.tempcard.collectorService.tasks.CollectInfoFromSerialAgent
-ru/temansky/tempcard/collectorService/repositories/AgentsRepository.java
- ru.temansky.tempcard.collectorService.repositories.AgentsRepository
-ru/temansky/tempcard/collectorService/repositories/ArduinoSensorRepository.java
- ru.temansky.tempcard.collectorService.repositories.ArduinoSensorRepository
-ru/temansky/tempcard/collectorService/models/db/Agent.java
- ru.temansky.tempcard.collectorService.models.db.Agent
-ru/temansky/tempcard/collectorService/models/db/SensorValue.java
- ru.temansky.tempcard.collectorService.models.db.SensorValue
+ru/temansky/tempcard/collectorService/service/SensorService.java
+ ru.temansky.tempcard.collectorService.service.SensorService
+ru/temansky/tempcard/collectorService/service/AgentService.java
+ ru.temansky.tempcard.collectorService.service.AgentService
 ru/temansky/tempcard/collectorService/CollectorServiceApplication.java
  ru.temansky.tempcard.collectorService.CollectorServiceApplication
+ru/temansky/tempcard/collectorService/implementation/SensorValueImpl.java
+ ru.temansky.tempcard.collectorService.implementation.SensorValueImpl

@@ -110,6 +110,31 @@ deploy_Api:
   only:
     - master
 
+deploy_Collector:
+  stage: deploy
+  image: ubuntu:latest
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq sshpass
+  # Setup SSH deploy keys
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -t rsa $HOST > ~/.ssh/known_hosts
+    - echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config
+  script:
+    - sshpass -V
+    - export SSHPASS=$USER_PASS
+    - sshpass -e scp -o stricthostkeychecking=no buildAll/web-variables.env $USER@$HOST:/project/ASO_FA/buildAll
+    - sshpass -e scp -o StrictHostKeyChecking=no buildAll/collector*.jar $USER@$HOST:/project/ASO_FA/buildAll
+    - sshpass -e ssh -o stricthostkeychecking=no $USER@$HOST docker-compose \
+      -f /project/ASO_FA/collector/docker-compose.yml \
+      --env-file /project/ASO_FA/buildAll/web-variables.env \
+      up -d --force
+  only:
+    - master
+
 deploy_Stage:
   stage: deploy
   image: ubuntu:latest
@@ -132,5 +157,3 @@ deploy_Stage:
       -f /project/ASO_FA/stage/docker-compose.yml \
       --env-file /project/ASO_FA/buildAll/web-variables.env \
       up -d --force
-
-
