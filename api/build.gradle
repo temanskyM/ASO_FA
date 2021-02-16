@@ -16,6 +16,14 @@ repositories {
 }
 jar {
     enabled = true
+    manifest {
+        attributes(
+                'Main-Class': 'ru.temansky.tempcard.api.App'
+        )
+    }
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 dependencies {
     //Database
