@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "SensorValues")
+@Table(name = "sensorValues")
 public class SensorValue {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,6 +31,12 @@ public class SensorValue {
         this.hum = hum;
         this.localDateTime = localDateTime;
         this.sensor = sensor;
+    }
+
+    public SensorValue(double temp, double hum, LocalDateTime localDateTime) {
+        this.temp = temp;
+        this.hum = hum;
+        this.localDateTime = localDateTime;
     }
 
     public Long getId() {
