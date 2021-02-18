@@ -5,7 +5,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import ru.temansky.tempcard.UartService.models.arduino.MessageFromArduino;
-import ru.temansky.tempcard.api.models.Agent;
+import ru.temansky.tempcard.collectorService.models.Agent;
 import ru.temansky.tempcard.collectorService.service.AgentService;
 
 import java.util.List;

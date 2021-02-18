@@ -6,9 +6,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import ru.temansky.tempcard.UartService.models.arduino.MessageFromArduino;
-import ru.temansky.tempcard.api.models.Agent;
-import ru.temansky.tempcard.api.models.Sensor;
-import ru.temansky.tempcard.api.models.SensorValue;
+import ru.temansky.tempcard.collectorService.models.Agent;
+import ru.temansky.tempcard.collectorService.models.Sensor;
+import ru.temansky.tempcard.collectorService.models.SensorValue;
 import ru.temansky.tempcard.collectorService.service.AgentService;
 import ru.temansky.tempcard.collectorService.service.SensorService;
 import ru.temansky.tempcard.collectorService.service.SensorValueService;
@@ -36,7 +36,7 @@ public class CollectInfoFromSerialAgent {
         this.sensorValueService = sensorValueService;
     }
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 30000)
     public void reportCurrentTime() {
         //log.info("The time is now {}", dateFormat.format(new Date()));
 

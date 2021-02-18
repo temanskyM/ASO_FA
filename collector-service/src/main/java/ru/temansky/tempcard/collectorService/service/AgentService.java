@@ -1,7 +1,7 @@
 package ru.temansky.tempcard.collectorService.service;
 
 import ru.temansky.tempcard.UartService.models.arduino.MessageFromArduino;
-import ru.temansky.tempcard.api.models.Agent;
+import ru.temansky.tempcard.collectorService.models.Agent;
 
 import java.util.List;
 

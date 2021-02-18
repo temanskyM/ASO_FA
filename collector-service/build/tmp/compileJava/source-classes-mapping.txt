@@ -1,7 +1,11 @@
 ru/temansky/tempcard/collectorService/service/SensorValueService.java
  ru.temansky.tempcard.collectorService.service.SensorValueService
+ru/temansky/tempcard/collectorService/models/Agent.java
+ ru.temansky.tempcard.collectorService.models.Agent
 ru/temansky/tempcard/collectorService/implementation/SensorValueImpl.java
  ru.temansky.tempcard.collectorService.implementation.SensorValueImpl
+ru/temansky/tempcard/collectorService/models/Sensor.java
+ ru.temansky.tempcard.collectorService.models.Sensor
 ru/temansky/tempcard/collectorService/configurations/LoadAgentsList.java
  ru.temansky.tempcard.collectorService.configurations.LoadAgentsList
 ru/temansky/tempcard/collectorService/implementation/SensorServiceImpl.java
@@ -16,3 +20,5 @@ ru/temansky/tempcard/collectorService/CollectorServiceApplication.java
  ru.temansky.tempcard.collectorService.CollectorServiceApplication
 ru/temansky/tempcard/collectorService/implementation/AgentServiceImpl.java
  ru.temansky.tempcard.collectorService.implementation.AgentServiceImpl
+ru/temansky/tempcard/collectorService/models/SensorValue.java
+ ru.temansky.tempcard.collectorService.models.SensorValue

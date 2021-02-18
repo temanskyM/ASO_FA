@@ -1,7 +1,7 @@
 package ru.temansky.tempcard.collectorService.service;
 
-import ru.temansky.tempcard.api.models.Sensor;
-import ru.temansky.tempcard.api.models.SensorValue;
+
+import ru.temansky.tempcard.collectorService.models.SensorValue;
 
 import java.util.List;
 
