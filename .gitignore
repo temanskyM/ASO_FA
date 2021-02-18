@@ -2,7 +2,6 @@
 /api/build/*
 /web/build/*
 /collector-service/build/*
-/collector-service/build/
 /uart-service/build/*
 /.gradle/*
 /gradle/
