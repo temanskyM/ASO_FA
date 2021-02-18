@@ -7,10 +7,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import ru.temansky.tempcard.api.models.*;
+import ru.temansky.tempcard.api.models.SensorValue;
+import ru.temansky.tempcard.api.models.SensorValueEntity;
 import ru.temansky.tempcard.api.repositories.AgentsRepository;
-import ru.temansky.tempcard.api.repositories.SensorsRepository;
 import ru.temansky.tempcard.api.repositories.SensorValueRepository;
+import ru.temansky.tempcard.api.repositories.SensorsRepository;
 
 import java.util.ArrayList;
 import java.util.List;

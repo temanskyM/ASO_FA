@@ -11,7 +11,6 @@ import ru.temansky.tempcard.api.repositories.AgentsRepository;
 import ru.temansky.tempcard.api.repositories.SensorsRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
