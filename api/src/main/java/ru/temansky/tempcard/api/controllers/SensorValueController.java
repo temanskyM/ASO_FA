@@ -40,7 +40,7 @@ public class SensorValueController {
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize,
             @RequestParam(defaultValue = "localDateTime") String sortBy) {
-        var paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+        PageRequest paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         Page<SensorValue> pagedResult = sensorValueRepository.findAll(paging);
 
         if (pagedResult.hasContent())
