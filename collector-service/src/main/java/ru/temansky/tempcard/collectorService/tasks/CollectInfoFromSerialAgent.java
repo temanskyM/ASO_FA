@@ -16,7 +16,6 @@ import ru.temansky.tempcard.collectorService.service.SensorValueService;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

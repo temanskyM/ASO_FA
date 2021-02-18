@@ -1,10 +1,10 @@
 package ru.temansky.tempcard.api.controllers;
 
-import com.fasterxml.jackson.databind.util.ArrayIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import ru.temansky.tempcard.api.exceptions.AgentNotFoundException;
@@ -17,10 +17,8 @@ import ru.temansky.tempcard.api.repositories.AgentsRepository;
 import ru.temansky.tempcard.api.repositories.SensorValueRepository;
 import ru.temansky.tempcard.api.repositories.SensorsRepository;
 
-import java.awt.print.Pageable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class SensorValueController {
@@ -41,9 +39,8 @@ public class SensorValueController {
     List<SensorValue> all(
             @RequestParam(defaultValue = "0") Integer pageNo,
             @RequestParam(defaultValue = "10") Integer pageSize,
-            @RequestParam(defaultValue = "id") String sortBy
-    ) {
-        var paging = PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
+            @RequestParam(defaultValue = "localDateTime") String sortBy) {
+        var paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         Page<SensorValue> pagedResult = sensorValueRepository.findAll(paging);
 
         if (pagedResult.hasContent())
@@ -58,9 +55,18 @@ public class SensorValueController {
     }
 
     @GetMapping("/api/sensors/{sensor_id}/sensorValues")
-    List<SensorValue> getSensorValuesFromSensor(@PathVariable long sensor_id) {
+    public List<SensorValue> getSensorValuesFromSensor(@PathVariable long sensor_id,
+                                                @RequestParam(defaultValue = "0") Integer pageNo,
+                                                @RequestParam(defaultValue = "10") Integer pageSize,
+                                                @RequestParam(defaultValue = "localDateTime") String sortBy) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
         Sensor sensor = sensorsRepository.findById(sensor_id).orElseThrow(() -> new SensorNotFoundException(sensor_id));
-        return sensor.getSensorValues();
+        Page<SensorValue> pagedResult = sensorValueRepository.findAllBySensor(sensor,paging);
+
+        if (pagedResult.hasContent())
+            return pagedResult.getContent();
+        else
+            return new ArrayList<>();
     }
 
     @PostMapping("/api/sensors/{sensor_id}/sensorValues")
