@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version '2.3.2.RELEASE'
     id 'io.spring.dependency-management' version '1.0.8.RELEASE'
     id 'java'
+    id 'idea'
 }
 
 group 'ru.temansky'
@@ -14,16 +15,18 @@ static def getCheckedOutGitCommitHash() {
 repositories {
     mavenCentral()
 }
+bootJar { enabled = true }
+    //mainClass = 'ru.temansky.tempcard.api.App'
+
+
 jar {
-    enabled = true
-    manifest {
-        attributes(
-                'Main-Class': 'ru.temansky.tempcard.api.App'
-        )
-    }
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+    enabled = false
+//    manifest {
+//        attributes "Main-Class": "ru.temansky.tempcard.api.App"
+//    }
+//    from {
+//        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+//    }
 }
 dependencies {
     //Database

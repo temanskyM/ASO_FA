@@ -8,8 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.ClientResponse;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import ru.temansky.tempcard.api.models.Agent;
-import ru.temansky.tempcard.api.models.Sensor;
+import ru.temansky.tempcard.collectorService.models.Sensor;
 import ru.temansky.tempcard.collectorService.service.SensorService;
 import ru.temansky.tempcard.collectorService.tasks.CollectInfoFromSerialAgent;
 

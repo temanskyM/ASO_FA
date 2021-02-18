@@ -17,7 +17,7 @@ before_script:
 build_gradle:
   stage: build
   script: 
-    - gradle --build-cache assemble
+    - gradle bootJar
     - mkdir buildAll
     - echo GITHASH=$CI_COMMIT_SHORT_SHA > buildAll/web-variables.env
     - sed -n "s#include\s*'\(.*\)'#\1#p" settings.gradle | awk '{print $0"/build/libs/*.jar"}' | awk '{print "cp "$0" buildAll"}' |xargs -n 3 |sh

@@ -5,8 +5,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
-import ru.temansky.tempcard.api.models.Sensor;
-import ru.temansky.tempcard.api.models.SensorValue;
+import ru.temansky.tempcard.collectorService.models.SensorValue;
 import ru.temansky.tempcard.collectorService.service.SensorValueService;
 
 import java.util.List;
