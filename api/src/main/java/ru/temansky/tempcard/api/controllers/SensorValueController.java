@@ -1,7 +1,11 @@
 package ru.temansky.tempcard.api.controllers;
 
+import com.fasterxml.jackson.databind.util.ArrayIterator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 import ru.temansky.tempcard.api.exceptions.AgentNotFoundException;
 import ru.temansky.tempcard.api.exceptions.SensorNotFoundException;
@@ -13,6 +17,8 @@ import ru.temansky.tempcard.api.repositories.AgentsRepository;
 import ru.temansky.tempcard.api.repositories.SensorValueRepository;
 import ru.temansky.tempcard.api.repositories.SensorsRepository;
 
+import java.awt.print.Pageable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,8 +38,18 @@ public class SensorValueController {
     }
 
     @GetMapping("/api/sensorValues")
-    Iterable<SensorValue> all() {
-        return sensorValueRepository.findAll();
+    List<SensorValue> all(
+            @RequestParam(defaultValue = "0") Integer pageNo,
+            @RequestParam(defaultValue = "10") Integer pageSize,
+            @RequestParam(defaultValue = "id") String sortBy
+    ) {
+        var paging = PageRequest.of(pageNo,pageSize, Sort.by(sortBy));
+        Page<SensorValue> pagedResult = sensorValueRepository.findAll(paging);
+
+        if (pagedResult.hasContent())
+            return pagedResult.getContent();
+        else
+            return new ArrayList<>();
     }
 
     @GetMapping("/api/sensorValues/{id}")
@@ -60,19 +76,19 @@ public class SensorValueController {
         Sensor sensor = agent.getSensors().stream()
                 .filter(findSensor -> findSensor.getId().equals(sensor_id))
                 .findFirst()
-                .orElseThrow(()-> new SensorNotFoundException(sensor_id));
+                .orElseThrow(() -> new SensorNotFoundException(sensor_id));
         newSensorValue.setSensor(sensor);
         return sensorValueRepository.save(newSensorValue);
     }
 
     @PutMapping("/api/sensorValues/{sensorValueId}")
-    SensorValue updateSensorValue(@RequestBody SensorValue newSensorValue, @PathVariable Long sensorValueId){
+    SensorValue updateSensorValue(@RequestBody SensorValue newSensorValue, @PathVariable Long sensorValueId) {
         return sensorValueRepository.findById(sensorValueId).map(sensorValue -> {
             sensorValue.setHum(newSensorValue.getHum());
             sensorValue.setTemp(newSensorValue.getTemp());
             sensorValue.setLocalDateTime(newSensorValue.getLocalDateTime());
             return sensorValueRepository.save(sensorValue);
-        }).orElseThrow(() ->new SensorValueNotFoundException(sensorValueId));
+        }).orElseThrow(() -> new SensorValueNotFoundException(sensorValueId));
     }
 
     @DeleteMapping("api/sensorValues/{id}")
