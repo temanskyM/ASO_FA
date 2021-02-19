@@ -16,7 +16,7 @@
             //Получаем список всех агентов
             $.ajax({
                 type: 'GET',
-                url: '/api/getAgentsList/',
+                url: 'http://172.31.21.191:20084/api/agents/',
                 success: function (result) {
                     //var result = JSON.parse(result);
                     var s = '';
