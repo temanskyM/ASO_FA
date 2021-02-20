@@ -3,6 +3,7 @@
 <head>
     <title>View sensor data</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
     <link rel="stylesheet" href="webjars/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" th:href="@{/css/cover.css}"/>
     <script src="webjars/jquery/jquery.min.js"></script>
@@ -21,11 +22,11 @@
                     //var result = JSON.parse(result);
                     var s = '';
                     for (var i = 0; i < result.length; i++) {
-                        s += '<option value="' + result[i].id + '">' + result[i].name + '</option>';
+                        s += '<option value="' + result[i].id + '">' + result[i].hostname + ' (' + result[i].ip + ':' + result[i].port + ')' + '</option>';
                     }
                     //alert(s);
                     $('#comboboxAgents').html(s);
-                    if (result.length>0)
+                    if (result.length > 0)
                         loadDataInSensors();
                 },
                 error: function () {
@@ -39,7 +40,7 @@
             var agentId = $('#comboboxAgents').val();
             $.ajax({
                 type: 'GET',
-                url: '/api/getSensorList/' + agentId,
+                url: 'http://172.31.21.191:20084/api/agents/' + agentId + '/sensors',
                 success: function (result) {
                     var s = '';
                     for (var i = 0; i < result.length; i++) {
@@ -55,13 +56,14 @@
         }
 
         function loadDataInTable() {
+            var agentId = $('#comboboxAgents').val();
             var sensorId = $('#comboboxSensor').val();
             $.ajax({
                 type: 'GET',
-                url: '/api/getSensorData/',
+                url: 'http://172.31.21.191:20084/api/sensors' + '/' + sensorId + '/sensorValues',
                 success: function (result) {
                     var rows = []
-                    for (var i = 0; i < 1000; i++) {
+                    for (var i = 0; i < result.length; i++) {
                         rows.push({
                             id: result[i].id,
                             temp: result[i].temp,
@@ -128,7 +130,6 @@
 
         <div class="tableSensorValue">
             <table
-
                     id="tableSensorValues"
                     data-toggle="table"
                     data-toolbar="#toolbar"
@@ -141,7 +142,7 @@
                     data-pagination="true"
                     data-id-field="id"
                     data-page-list="[10, 25, 50, 100, all]"
-                    data-side-pagination="client">
+                    data-side-pagination="server">
                 <thead>
                 <tr>
                     <th data-field="id">ID</th>

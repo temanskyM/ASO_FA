@@ -55,18 +55,18 @@ public class SensorValueController {
     }
 
     @GetMapping("/api/sensors/{sensor_id}/sensorValues")
-    public List<SensorValue> getSensorValuesFromSensor(@PathVariable long sensor_id,
+    public Page<SensorValue> getSensorValuesFromSensor(@PathVariable long sensor_id,
                                                 @RequestParam(defaultValue = "0") Integer pageNo,
-                                                @RequestParam(defaultValue = "10") Integer pageSize,
+                                                @RequestParam(defaultValue = "10") Integer limit,
                                                 @RequestParam(defaultValue = "localDateTime") String sortBy) {
-        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy).descending());
+        Pageable paging = PageRequest.of(pageNo, limit, Sort.by(sortBy).descending());
         Sensor sensor = sensorsRepository.findById(sensor_id).orElseThrow(() -> new SensorNotFoundException(sensor_id));
         Page<SensorValue> pagedResult = sensorValueRepository.findAllBySensor(sensor,paging);
 
         if (pagedResult.hasContent())
-            return pagedResult.getContent();
+            return pagedResult;
         else
-            return new ArrayList<>();
+            return null;
     }
 
     @PostMapping("/api/sensors/{sensor_id}/sensorValues")
