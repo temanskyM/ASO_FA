@@ -63,12 +63,12 @@
                 url: 'http://172.31.21.191:20084/api/sensors' + '/' + sensorId + '/sensorValues',
                 success: function (result) {
                     var rows = []
-                    for (var i = 0; i < result.length; i++) {
+                    for (var i = 0; i < result.content.length; i++) {
                         rows.push({
-                            id: result[i].id,
-                            temp: result[i].temp,
-                            hum: result[i].hum,
-                            localDateTime: result[i].localDateTime
+                            id: result.content[i].id,
+                            temp: result.content[i].temp,
+                            hum: result.content[i].hum,
+                            localDateTime: result.content[i].localDateTime
                         })
                     }
                     $('#tableSensorValues').bootstrapTable('load', rows)
